@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rabbit Cage Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <button onclick="goHome()">&#x1F3E0;</button>
+        <span>Rabbit Cage Management</span>
+    </header>
+
+    <div id="cageDetails">
+        <form id="rabbitForm" onsubmit="saveData(event)">
+            <div>
+                <label for="breed">BREED:</label>
+                <input type="text" id="breed" name="breed">
+            </div>
+            <div>
+                <label for="family">FAMILY:</label>
+                <input type="text" id="family" name="family">
+            </div>
+            <div>
+                <label for="birthDate">DATE OF BIRTH:</label>
+                <input type="date" id="birthDate" name="birthDate">
+            </div>
+            <div>
+                <label for="weight">WEIGHT:</label>
+                <input type="text" id="weight" name="weight">
+            </div>
+            <div>
+                <label>PREGNANT:</label>
+                <label><input type="radio" name="pregnant" value="yes" onclick="togglePregnancyDetails(true)"> YES</label>
+                <label><input type="radio" name="pregnant" value="no" onclick="togglePregnancyDetails(false)"> NO</label>
+            </div>
+            <div id="pregnancyDetails" style="display: none;">
+                <div>
+                    <label for="matedRabbit">MATED RABBIT:</label>
+                    <input type="text" id="matedRabbit" name="matedRabbit">
+                </div>
+                <div>
+                    <label for="pregnancyStart">START OF PREGNANCY:</label>
+                    <input type="date" id="pregnancyStart" name="pregnancyStart">
+                </div>
+                <div>
+                    <label for="dueDate">DUE DATE OF PREGNANCY:</label>
+                    <input type="date" id="dueDate" name="dueDate">
+                </div>
+            </div>
+            <div>
+                <label for="foodIntake">FOOD INTAKE:</label>
+                <label><input type="radio" name="foodIntake" value="normal"> NORMAL</label>
+                <label><input type="radio" name="foodIntake" value="irregular"> IRREGULAR</label>
+            </div>
+            <div>
+                <label>ELIGIBLE FOR MATING:</label>
+                <label><input type="radio" name="mating" value="yes"> YES</label>
+                <label><input type="radio" name="mating" value="no"> NO</label>
+            </div>
+            <div>
+                <label for="note">NOTE:</label>
+                <textarea id="note" name="note"></textarea>
+            </div>
+            <div class="buttons">
+                <button type="submit">SUBMIT</button>
+                <button type="button" onclick="goHome()">CANCEL</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="homePage" class="cage-list" style="display: none;">
+        <button onclick="showCageDetails(1)">CAGE 1</button>
+        <button onclick="showCageDetails(2)">CAGE 2</button>
+        <button onclick="showCageDetails(3)">CAGE 3</button>
+        <button onclick="showCageDetails(4)">CAGE 4</button>
+    </div>
+
+    <script>
+        function goHome() {
+            document.getElementById('homePage').style.display = 'block';
+            document.getElementById('cageDetails').style.display = 'none';
+            document.getElementById('pregnancyDetails').style.display = 'none';
+        }
+
+        function showCageDetails(cageNumber) {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('cageDetails').style.display = 'block';
+            loadData(cageNumber);
+            // Store the current cage number
+            document.getElementById('rabbitForm').dataset.cageNumber = cageNumber;
+        }
+
+        function togglePregnancyDetails(show) {
+            document.getElementById('pregnancyDetails').style.display = show ? 'block' : 'none';
+        }
+
+        function saveData(event) {
+            event.preventDefault();
+            const form = document.getElementById('rabbitForm');
+            const cageNumber = form.dataset.cageNumber;
+            const data = new FormData(form);
+            const obj = {};
+            data.forEach((value, key) => {
+                obj[key] = value;
+            });
+            localStorage.setItem(`cageData${cageNumber}`, JSON.stringify(obj));
+            goHome();
+        }
+
+        function loadData(cageNumber) {
+            const data = JSON.parse(localStorage.getItem(`cageData${cageNumber}`));
+            const form = document.getElementById('rabbitForm');
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    const field = form.elements[key];
+                    if (field) {
+                        if (field.type === 'radio') {
+                            form.elements[key].value = data[key];
+                            if (data[key] === "yes") {
+                                field.checked = true;
+                                togglePregnancyDetails(true);
+                            } else {
+                                field.checked = true;
+                                togglePregnancyDetails(false);
+                            }
+                        } else {
+                            field.value = data[key];
+                        }
+                    }
+                });
+            } else {
+                form.reset();
+                togglePregnancyDetails(false);
+            }
+        }
+    </script>
+</body>
+</html>

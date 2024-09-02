@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rabbit Cage Management - Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <button onclick="goHome()">&#x1F3E0; Home</button>
+    </header>
+    <form id="cageForm">
+        <div>
+            <label for="cage">Cage:</label>
+            <input type="text" id="cage" name="cage" readonly>
+        </div>
+        <div>
+            <label for="status">Rabbit Status:</label>
+            <input type="text" id="status" name="status" value="Rabbit Doe" readonly>
+        </div>
+        <div>
+            <label for="breed">Breed:</label>
+            <input type="text" id="breed" name="breed">
+        </div>
+        <div>
+            <label for="family">Family:</label>
+            <input type="text" id="family" name="family">
+        </div>
+        <div>
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob">
+        </div>
+        <div>
+            <label for="weight">Weight:</label>
+            <input type="text" id="weight" name="weight">
+        </div>
+        <div>
+            <label>Pregnant:</label>
+            <label><input type="radio" name="pregnant" value="yes"> Yes</label>
+            <label><input type="radio" name="pregnant" value="no"> No</label>
+        </div>
+        <div>
+            <label>Food Intake:</label>
+            <label><input type="radio" name="foodIntake" value="normal"> Normal</label>
+            <label><input type="radio" name="foodIntake" value="irregular"> Irregular</label>
+        </div>
+        <div>
+            <label>Eligible for Mating:</label>
+            <label><input type="radio" name="mating" value="yes"> Yes</label>
+            <label><input type="radio" name="mating" value="no"> No</label>
+        </div>
+        <div>
+            <label for="note">Note:</label>
+            <textarea id="note" name="note"></textarea>
+        </div>
+        <div>
+            <label for="matedRabbit">Mated Rabbit:</label>
+            <input type="text" id="matedRabbit" name="matedRabbit">
+        </div>
+        <div>
+            <label for="startPregnancy">Start of Pregnancy:</label>
+            <input type="date" id="startPregnancy" name="startPregnancy">
+        </div>
+        <div>
+            <label for="dueDate">Due Date of Pregnancy:</label>
+            <input type="date" id="dueDate" name="dueDate">
+        </div>
+        <div class="buttons">
+            <button type="submit">Submit</button>
+            <button type="button" onclick="goHome()">Cancel</button>
+        </div>
+    </form>
+
+    <script>
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+
+        // Get the cage name from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const cageName = urlParams.get('cage');
+        document.getElementById('cage').value = cageName;
+
+        document.getElementById('cageForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = {
+                cage: formData.get('cage'),
+                status: formData.get('status'),
+                breed: formData.get('breed'),
+                family: formData.get('family'),
+                dob: formData.get('dob'),
+                weight: formData.get('weight'),
+                pregnant: formData.get('pregnant'),
+                foodIntake: formData.get('foodIntake'),
+                mating: formData.get('mating'),
+                note: formData.get('note'),
+                matedRabbit: formData.get('matedRabbit'),
+                startPregnancy: formData.get('startPregnancy'),
+                dueDate: formData.get('dueDate'),
+            };
+
+            console.log('Form Data:', data);
+
+            // Here you can add code to send the data to your server
+            // For example, using fetch API:
+            // fetch('your_server_endpoint', {
+            //     method: 'POST',
+            //     body: JSON.stringify(data),
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     }
+            // }).then(response => response.json())
+            // .then(data => {
+            //     console.log('Success:', data);
+            // }).catch((error) => {
+            //     console.error('Error:', error);
+            // });
+
+            // Reset the form and go back to homepage
+            this.reset();
+            goHome();
+        });
+    </script>
+</body>
+</html>

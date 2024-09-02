@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Information Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="radio"] {
+            width: auto;
+        }
+        .radio-group {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 10px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .home-btn {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Pet Information</h1>
+    <form id="pet-form">
+        <label for="breed">Breed:</label>
+        <input type="text" id="breed" name="breed" required>
+
+        <label for="family">Family:</label>
+        <input type="text" id="family" name="family" required>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="weight">Weight:</label>
+        <input type="text" id="weight" name="weight" required>
+
+        <label>Pregnant:</label>
+        <div class="radio-group">
+            <label for="pregnant_yes">
+                <input type="radio" id="pregnant_yes" name="pregnant" value="yes" required> Yes
+            </label>
+            <label for="pregnant_no">
+                <input type="radio" id="pregnant_no" name="pregnant" value="no" required> No
+            </label>
+        </div>
+
+        <label>Food Intake:</label>
+        <div class="radio-group">
+            <label for="food_normal">
+                <input type="radio" id="food_normal" name="food_intake" value="normal" required> Normal
+            </label>
+            <label for="food_irregular">
+                <input type="radio" id="food_irregular" name="food_intake" value="irregular" required> Irregular
+            </label>
+        </div>
+
+        <label>Eligible for Mating:</label>
+        <div class="radio-group">
+            <label for="mating_yes">
+                <input type="radio" id="mating_yes" name="mating" value="yes" required> Yes
+            </label>
+            <label for="mating_no">
+                <input type="radio" id="mating_no" name="mating" value="no" required> No
+            </label>
+        </div>
+
+        <label for="note">Note:</label>
+        <textarea id="note" name="note" rows="4"></textarea>
+
+        <div class="button-group">
+            <button type="button" class="submit-btn" onclick="submitForm()">Submit</button>
+            <button type="button" class="home-btn" onclick="location.href='/'">Home</button>
+        </div>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fetch the pet information and populate the form
+            fetch('/')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.pet_info) {
+                        const petInfo = data.pet_info;
+                        document.getElementById('breed').value = petInfo.breed || '';
+                        document.getElementById('family').value = petInfo.family || '';
+                        document.getElementById('dob').value = petInfo.dob || '';
+                        document.getElementById('weight').value = petInfo.weight || '';
+                        if (petInfo.pregnant) {
+                            document.querySelector(`input[name="pregnant"][value="${petInfo.pregnant}"]`).checked = true;
+                        }
+                        if (petInfo.food_intake) {
+                            document.querySelector(`input[name="food_intake"][value="${petInfo.food_intake}"]`).checked = true;
+                        }
+                        if (petInfo.mating) {
+                            document.querySelector(`input[name="mating"][value="${petInfo.mating}"]`).checked = true;
+                        }
+                        document.getElementById('note').value = petInfo.note || '';
+                    }
+                });
+        });
+
+        function submitForm() {
+            const form = document.getElementById('pet-form');
+            const formData = new FormData(form);
+
+            fetch('/submit', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Information submitted successfully!');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
