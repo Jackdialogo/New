@@ -19,6 +19,14 @@ function showCageDetails(cageNumber) {
 function saveData(event) {
     event.preventDefault();
     const form = document.getElementById('rabbitForm');
+    
+    // Calculate rabbit age based on birthdate
+    const birthDate = new Date(form.birthDate.value);
+    const today = new Date();
+    const ageInMonths = (today.getFullYear() - birthDate.getFullYear()) * 12 + (today.getMonth() - birthDate.getMonth());
+
+    const eligibleForMating = ageInMonths >= 6 ? 'yes' : 'no';
+
     const data = {
         serialNumber: form.serialNumber.value,
         breed: form.breed.value,
@@ -31,7 +39,7 @@ function saveData(event) {
         pregnancyStart: form.pregnancyStart ? form.pregnancyStart.value : '',
         dueDate: form.dueDate ? form.dueDate.value : '',
         foodIntake: form.foodIntake.value,
-        mating: form.mating.value,
+        mating: eligibleForMating,  // Automatically set based on age
         note: form.note.value
     };
 
@@ -47,7 +55,7 @@ function loadCageData(cageNumber) {
     document.getElementById('family').value = data.family || '';
     document.getElementById('birthDate').value = data.birthDate || '';
     document.getElementById('weight').value = data.weight || '';
-    
+
     if (data.gender === "female") {
         document.querySelector('input[name="gender"][value="female"]').checked = true;
         togglePregnancy(true);
@@ -68,8 +76,8 @@ function loadCageData(cageNumber) {
     document.getElementById('pregnancyStart').value = data.pregnancyStart || '';
     document.getElementById('dueDate').value = data.dueDate || '';
     document.querySelector(`input[name="foodIntake"][value="${data.foodIntake || 'normal'}"]`).checked = true;
-    document.querySelector(`input[name="mating"][value="${data.mating || 'no'}"]`).checked = true;
-    document.getElementById('note').value = data.note || '';
+
+    // No need to load the 'eligible for mating' field, as it's now calculated automatically.
 }
 
 function togglePregnancy(show) {
