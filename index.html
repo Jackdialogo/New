@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rabbit Cage</title>
+    <title>RABBIT CAGE</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <button onclick="goHome()">&#x1F3E0;</button>
-        <span id="headerTitle">Rabbit Cage</span>
+        <button onclick="goHome()">&#x1F3E0;</button> 
+        <span id="headerTitle">RABBIT CAGE</span>
         <button onclick="goToRabbitProfile()">&#x1F407;</button>
     </header>
 
@@ -24,40 +24,54 @@
     </div>
 
     <!-- Cage Details (Form) -->
-    <div id="cageTitle" class="centered-title">
+    <div id="cageDetails" style="display: none;">
         <h2 id="formTitle">CAGE NO. <span id="cageNumber"></span></h2>
-    </div>
         <form id="rabbitForm" onsubmit="saveData(event)">
+            <!-- Serial Number -->
             <div>
                 <label for="serialNumber">Serial Number:</label>
                 <input type="text" id="serialNumber" name="serialNumber" required>
             </div>
+
+            <!-- Breed -->
             <div>
                 <label for="breed">Breed:</label>
                 <input type="text" id="breed" name="breed" placeholder="e.g., Lionhead, Angora" required>
             </div>
+
+            <!-- Family -->
             <div>
                 <label for="family">Family:</label>
                 <input type="text" id="family" name="family">
             </div>
+
+            <!-- Date of Birth -->
             <div>
                 <label for="birthDate">Date of Birth:</label>
                 <input type="date" id="birthDate" name="birthDate" required>
             </div>
+
+            <!-- Weight -->
             <div>
                 <label for="weight">Weight (kg):</label>
                 <input type="number" step="0.1" id="weight" name="weight" min="0" required>
             </div>
+
+            <!-- Gender -->
             <div>
                 <label>Gender:</label>
                 <label><input type="radio" name="gender" value="male" onclick="togglePregnancy(false)" required> Male</label>
                 <label><input type="radio" name="gender" value="female" onclick="togglePregnancy(true)" required> Female</label>
             </div>
+
+            <!-- Pregnant Option -->
             <div id="pregnancyOption" style="display: none;">
                 <label>Pregnant:</label>
                 <label><input type="radio" name="pregnant" value="yes" onclick="togglePregnancyDetails(true)" required> Yes</label>
                 <label><input type="radio" name="pregnant" value="no" onclick="togglePregnancyDetails(false)" required> No</label>
             </div>
+
+            <!-- Pregnancy Details -->
             <div id="pregnancyDetails" style="display: none;">
                 <div>
                     <label for="matedRabbit">Mated Rabbit:</label>
@@ -72,20 +86,28 @@
                     <input type="date" id="dueDate" name="dueDate">
                 </div>
             </div>
+
+            <!-- Food Intake -->
             <div>
                 <label>Food Intake:</label>
                 <label><input type="radio" name="foodIntake" value="normal" required> Normal</label>
                 <label><input type="radio" name="foodIntake" value="irregular" required> Irregular</label>
             </div>
+
+            <!-- Eligible for Mating -->
             <div>
                 <label>Eligible for Mating:</label>
                 <label><input type="radio" name="mating" value="yes" required> Yes</label>
                 <label><input type="radio" name="mating" value="no" required> No</label>
             </div>
+
+            <!-- Notes -->
             <div>
                 <label for="note">Notes:</label>
                 <textarea id="note" name="note" placeholder="Any additional notes..."></textarea>
             </div>
+
+            <!-- Submit and Cancel Buttons -->
             <div class="buttons">
                 <button type="submit">Save</button>
                 <button type="button" onclick="goHome()">Cancel</button>
