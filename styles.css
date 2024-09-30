@@ -144,6 +144,11 @@ header .rabbit-icon i {
     color: white;
 }
 
+.centered-title {
+    text-align: center;
+    color: #0044CC; /* A darker blue for better visibility */
+    font-weight: bold;
+}
 /* Cage details form styling */
 form {
     background-color: white;
