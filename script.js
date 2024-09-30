@@ -15,6 +15,28 @@ function showCageDetails(cageNumber) {
     document.getElementById('cageNumber').innerText = cageNumber;
 }
 
+function checkMatingEligibility() {
+    const birthDate = document.getElementById('birthDate').value;
+    const notesTextarea = document.getElementById('note');
+    if (!birthDate) {
+        notesTextarea.value = ''; // Clear the notes if no birth date is provided
+        return;
+    }
+
+    const today = new Date();
+    const birth = new Date(birthDate);
+    const ageInMonths = (today.getFullYear() - birth.getFullYear()) * 12 + (today.getMonth() - birth.getMonth());
+
+    // If the rabbit is 6 months or older, it is eligible for mating.
+    const eligibility = ageInMonths >= 6;
+
+    if (eligibility) {
+        notesTextarea.value = 'The rabbit is eligible for mating.'; // Set the eligibility note
+    } else {
+        notesTextarea.value = ''; // Clear the note if not eligible
+    }
+}
+
 function saveData(event) {
     event.preventDefault();
     const form = document.getElementById('rabbitForm');
@@ -39,9 +61,24 @@ function saveData(event) {
     goHome();
 }
 
-function togglePregnancy(show) {
-    document.getElementById('pregnancyOption').style.display = show ? 'block' : 'none';
-    document.getElementById('pregnancyDetails').style.display = 'none';
+function clearForm() {
+    document.getElementById('rabbitForm').reset(); // Reset all form fields
+    document.getElementById('note').value = ''; // Clear the notes textarea
+}
+
+function deleteCage() {
+    const cageNumber = document.getElementById('cageNumber').innerText; // Get current cage number
+    const confirmDelete = confirm(`Are you sure you want to delete Cage No. ${cageNumber}?`);
+    if (confirmDelete) {
+        localStorage.removeItem(`rabbitData${cageNumber}`); // Remove data from local storage
+        alert(`Cage No. ${cageNumber} has been deleted.`);
+        goHome(); // Return to home page
+    }
+}
+
+function togglePregnancy(isFemale) {
+    document.getElementById('pregnancyOption').style.display = isFemale ? 'block' : 'none';
+    document.getElementById('pregnancyDetails').style.display = 'none'; // Hide pregnancy details when gender is toggled
 }
 
 function togglePregnancyDetails(show) {
