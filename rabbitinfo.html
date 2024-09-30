@@ -60,6 +60,7 @@
             border-radius: 50%;
             margin: 0 auto 20px;
             overflow: hidden;
+            cursor: pointer; /* Change cursor to pointer for interactivity */
         }
 
         .profile-picture img {
@@ -91,6 +92,42 @@
             display: inline-block;
             font-size: 16px;
             border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
             cursor: pointer;
         }
 
@@ -132,8 +169,14 @@
     </style>
 </head>
 <body>
+    <header>
+        <button onclick="goHome()">&#x1F3E0;</button> 
+        <span id="headerTitle">RABBIT PROFILE</span>
+        <button onclick="goToRabbitProfile()">&#x1F407;</button>
+    </header>
+
     <div class="profile-card">
-        <div class="profile-picture">
+        <div class="profile-picture" id="profilePicture" onclick="showUploadPrompt()">
             <img src="https://i.pinimg.com/564x/fd/2a/2c/fd2a2cdad94156e950fa549ac59e1655.jpg" alt="Rabbit Profile Picture">
         </div>
         <h2 id="breed">Breed</h2>
@@ -154,54 +197,88 @@
         </div>
     </div>
 
-  <script>
-window.onload = function() {
-    // Extract cage number from URL
-    const params = new URLSearchParams(window.location.search);
-    const cageNumber = params.get('cage') || 1;
+    <!-- Modal for uploading a new picture -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUploadPrompt()">&times;</span>
+            <h2>Change Profile Picture</h2>
+            <input type="file" id="fileInput" accept="image/*">
+            <button onclick="changeProfilePicture()">Upload</button>
+        </div>
+    </div>
 
-    // Load rabbit data from localStorage
-    const data = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
+    <script>
+        window.onload = function() {
+            // Extract cage number from URL
+            const params = new URLSearchParams(window.location.search);
+            const cageNumber = params.get('cage') || 1;
 
-    // Update profile details
-    document.getElementById('breed').innerText = data.breed || 'Unknown';
-    document.getElementById('serial-no').innerText = data.serialNumber || 'Unknown';
-    document.getElementById('cage-no').innerText = cageNumber;
-    document.getElementById('age').innerText = calculateAge(data.birthDate) || 'Unknown';
-    document.getElementById('weight').innerText = data.weight || 'Unknown';
-    document.getElementById('family').innerText = data.family || 'Unknown';
-    document.getElementById('food-intake').innerText = data.foodIntake === "normal" ? "Normal" : "Irregular";
-    document.getElementById('pregnancy-start').innerText = data.pregnancyStart || 'Unknown';
-    document.getElementById('pregnancy-due').innerText = data.dueDate || 'Unknown';
-    document.getElementById('mating').innerText = data.mating === "yes" ? "Yes" : "No";
+            // Load rabbit data from localStorage
+            const data = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
 
-    // Determine and set gender from the index.html 'Gender' field
-    document.getElementById('gender').innerText = (data.gender || 'Unknown').toLowerCase().replace(/^\w/, c => c.toUpperCase());
+            // Update profile details
+            document.getElementById('breed').innerText = data.breed || 'Unknown';
+            document.getElementById('serial-no').innerText = data.serialNumber || 'Unknown';
+            document.getElementById('cage-no').innerText = cageNumber;
+            document.getElementById('age').innerText = calculateAge(data.birthDate) || 'Unknown';
+            document.getElementById('weight').innerText = data.weight || 'Unknown';
+            document.getElementById('family').innerText = data.family || 'Unknown';
+            document.getElementById('food-intake').innerText = data.foodIntake === "normal" ? "Normal" : "Irregular";
+            document.getElementById('pregnancy-start').innerText = data.pregnancyStart || 'Unknown';
+            document.getElementById('pregnancy-due').innerText = data.dueDate || 'Unknown';
+            document.getElementById('mating').innerText = data.mating === "yes" ? "Yes" : "No";
 
-    // Update edit link dynamically to point to the correct cage number
-    document.getElementById('edit-link').href = `index.html?cage=${cageNumber}`;
-}
+            // Determine and set gender from the index.html 'Gender' field
+            document.getElementById('gender').innerText = (data.gender || 'Unknown').toLowerCase().replace(/^\w/, c => c.toUpperCase());
 
-// Function to calculate age from birth date
-function calculateAge(birthDate) {
-    if (!birthDate) return null;
-    const birth = new Date(birthDate);
-    const today = new Date();
-    let age = today.getFullYear() - birth.getFullYear();
-    const m = today.getMonth() - birth.getMonth();
+            // Update edit link dynamically to point to the correct cage number
+            document.getElementById('edit-link').href = `index.html?cage=${cageNumber}`;
+        }
 
-    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
-        age--;
-    }
+        // Function to calculate age from birth date
+        function calculateAge(birthDate) {
+            if (!birthDate) return null;
+            const birth = new Date(birthDate);
+            const today = new Date();
+            let age = today.getFullYear() - birth.getFullYear();
+            const m = today.getMonth() - birth.getMonth();
 
-    // If age is less than 1 year, calculate months
-    if (age < 1) {
-        const months = (today.getFullYear() - birth.getFullYear()) * 12 + today.getMonth() - birth.getMonth();
-        return months + (months > 1 ? ' months' : ' month');
-    }
+            if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+                age--;
+            }
 
-    return age + (age > 1 ? ' years' : ' year');
-}
-</script>
+            // If age is less than 1 year, calculate months
+            if (age < 1) {
+                const months = (today.getFullYear() - birth.getFullYear()) * 12 + today.getMonth() - birth.getMonth();
+                return months + (months > 1 ? ' months' : ' month');
+            }
+
+            return age + (age > 1 ? ' years' : ' year');
+        }
+
+        function showUploadPrompt() {
+            document.getElementById('uploadModal').style.display = 'block'; // Show the modal
+        }
+
+        function closeUploadPrompt() {
+            document.getElementById('uploadModal').style.display = 'none'; // Hide the modal
+        }
+
+        function changeProfilePicture() {
+            const fileInput = document.getElementById('fileInput');
+            const profilePicture = document.getElementById('profilePicture').querySelector('img');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    profilePicture.src = e.target.result; // Change the image source to the uploaded file
+                    closeUploadPrompt(); // Close the modal after upload
+                };
+                reader.readAsDataURL(fileInput.files[0]); // Convert file to base64
+            } else {
+                alert("Please select a file.");
+            }
+        }
+    </script>
 </body>
 </html>
