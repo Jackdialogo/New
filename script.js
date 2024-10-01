@@ -13,6 +13,16 @@ function goToRabbitProfile() {
     window.location.href = `rabbitinfo.html?cage=${cageNumber}`;
 }
 
+function goToEditForm() {
+    const params = new URLSearchParams(window.location.search);
+    const cageNumber = params.get('cage');
+    if (!cageNumber) {
+        alert("Cage number not found.");
+        return;
+    }
+    window.location.href = `rabbitinfo.html?cage=${cageNumber}&edit=true`; 
+}
+
 function showCageDetails(cageNumber) {
     document.getElementById('homePage').style.display = 'none';
     document.getElementById('cageDetails').style.display = 'block';
