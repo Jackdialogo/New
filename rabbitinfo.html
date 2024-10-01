@@ -211,8 +211,15 @@
         window.onload = function() {
             // Extract cage number from URL
             const params = new URLSearchParams(window.location.search);
-            const cageNumber = params.get('cage') || 1;
+            const isEditMode = params.get('edit') === 'true';
 
+            if (isEditMode) {
+                // Display the form for editing the rabbit’s details
+                document.getElementById('editForm').style.display = 'block';
+            } else {
+                // Display the rabbit’s details in read-only mode
+                document.getElementById('editForm').style.display = 'none';
+            }
             // Load rabbit data from localStorage
             const data = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
 
@@ -262,16 +269,6 @@
 
         function closeUploadPrompt() {
             document.getElementById('uploadModal').style.display = 'none'; // Hide the modal
-        }
-
-        function goToEditForm() {
-            const params = new URLSearchParams(window.location.search);
-            const cageNumber = params.get('cage');
-            if (!cageNumber) {
-                alert("Cage number not found.");
-                return;
-            }
-            window.location.href = `rabbitinfo.html?cage=${cageNumber}&edit=true`; 
         }
 
         function changeProfilePicture() {
