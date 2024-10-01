@@ -15,6 +15,29 @@ function showCageDetails(cageNumber) {
     document.getElementById('cageNumber').innerText = cageNumber;
 }
 
+function populateCageDetails(cageNumber) {
+    const savedData = localStorage.getItem(`rabbitData${cageNumber}`);
+    if (savedData) {
+        const data = JSON.parse(savedData);
+        const form = document.getElementById('rabbitForm');
+        form.serialNumber.value = data.serialNumber;
+        form.breed.value = data.breed;
+        form.family.value = data.family;
+        form.birthDate.value = data.birthDate;
+        form.weight.value = data.weight;
+        form.gender.value = data.gender;
+        if (data.gender === 'female') {
+            togglePregnancy(true);
+            form.pregnant.value = data.pregnant;
+            form.matedRabbit.value = data.matedRabbit;
+            form.pregnancyStart.value = data.pregnancyStart;
+            form.dueDate.value = data.dueDate;
+        }
+        form.foodIntake.value = data.foodIntake;
+        form.note.value = data.note;
+    }
+}
+
 function checkMatingEligibility() {
     const birthDate = document.getElementById('birthDate').value;
     const notesTextarea = document.getElementById('note');
@@ -40,17 +63,18 @@ function checkMatingEligibility() {
 function saveData(event) {
     event.preventDefault();
     const form = document.getElementById('rabbitForm');
+    const gender = form.gender.value;
     const data = {
         serialNumber: form.serialNumber.value,
         breed: form.breed.value,
         family: form.family.value,
         birthDate: form.birthDate.value,
         weight: form.weight.value,
-        gender: form.gender.value,
-        pregnant: form.pregnant ? form.pregnant.value : 'no',
-        matedRabbit: form.matedRabbit.value,
-        pregnancyStart: form.pregnancyStart.value,
-        dueDate: form.dueDate.value,
+        gender: gender,
+        pregnant: gender === 'female' ? form.pregnant.value : null,
+        matedRabbit: gender === 'female' ? form.matedRabbit.value : null,
+        pregnancyStart: gender === 'female' ? form.pregnancyStart.value : null,
+        dueDate: gender === 'female' ? form.dueDate.value : null,
         foodIntake: form.foodIntake.value,
         mating: form.mating.value,
         note: form.note.value
@@ -62,8 +86,10 @@ function saveData(event) {
 }
 
 function clearForm() {
-    document.getElementById('rabbitForm').reset(); // Reset all form fields
+    const form = document.getElementById('rabbitForm');
+    form.reset(); // Reset all form fields
     document.getElementById('note').value = ''; // Clear the notes textarea
+    togglePregnancy(false); // Hide pregnancy details
 }
 
 function deleteCage() {
