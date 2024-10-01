@@ -264,6 +264,16 @@
             document.getElementById('uploadModal').style.display = 'none'; // Hide the modal
         }
 
+        function goToEditForm() {
+            const params = new URLSearchParams(window.location.search);
+            const cageNumber = params.get('cage');
+            if (!cageNumber) {
+                alert("Cage number not found.");
+                return;
+            }
+            window.location.href = `rabbitinfo.html?cage=${cageNumber}&edit=true`; 
+        }
+
         function changeProfilePicture() {
             const fileInput = document.getElementById('fileInput');
             const profilePicture = document.getElementById('profilePicture').querySelector('img');
