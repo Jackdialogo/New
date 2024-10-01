@@ -6,6 +6,10 @@ function goHome() {
 function goToRabbitProfile() {
     const params = new URLSearchParams(window.location.search);
     const cageNumber = params.get('cage') || 1;
+    if (!cageNumber) {
+        alert("Please select a cage first.");
+        return;
+    }
     window.location.href = `rabbitinfo.html?cage=${cageNumber}`;
 }
 
