@@ -74,6 +74,21 @@ function checkMatingEligibility() {
     }
 }
 
+function saveRabbitDetails() {
+    const cageNumber = ...; // Get the cage number from the form
+    const rabbitData = {
+        breed: document.getElementById('breedInput').value,
+        serialNumber: document.getElementById('serialNoInput').value,
+        // Add other fields as needed
+    };
+
+    // Save the rabbit data in localStorage
+    localStorage.setItem(`rabbitData${cageNumber}`, JSON.stringify(rabbitData));
+
+    // Show notification
+    alert("Rabbit details saved successfully!");
+}
+
 function saveData(event) {
     event.preventDefault();
     const form = document.getElementById('rabbitForm');
