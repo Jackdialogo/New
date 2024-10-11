@@ -176,6 +176,7 @@ header .rabbit-icon:hover {
     background-color: rgba(0, 0, 0, 0.7); /* Optional: background color for better visibility */
     padding: 10px;
     border-radius: 10px;
+    left: 50%; /* Align it to the left */
 }
 
 /* Cage details form styling */
