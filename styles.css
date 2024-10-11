@@ -76,6 +76,19 @@ header .rabbit-icon:hover {
     border-radius: 10px;
 }
 
+.header {
+    position: absolute;
+    top: 10px; /* Adjust top position as needed */
+    left: 50%; /* Move it to the center horizontally */
+    transform: translateX(-50%); /* Correct centering */
+    background-color: green; /* Retain the background color */
+    color: white; /* Text color */
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 /* Sidebar styling */
 .sidebar {
     position: fixed;
