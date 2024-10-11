@@ -7,24 +7,32 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100vh; /* Full view height to enable vertical centering */
     flex-direction: column;
-    background-image: url('https://tinyurl.com/2ybmu2yr');
-    background-size: cover;
-    background-position: center;
+    background-image: url('https://tinyurl.com/2ybmu2yr'); /* Updated background */
+    background-size: cover; /* Ensures background covers the entire viewport */
+    background-position: center; /* Centers the background image */
+    background-attachment: fixed; /* Parallax effect */
+    padding-top: 70px; /* Add padding to the body to compensate for the sticky header height */
 }
 
 /* Header styling */
 header {
-    background-color: #4CAF50;
+    background-color: rgba(76, 175, 80, 0.95); /* Increased opacity for stronger contrast */
     color: white;
-    padding: 15px;
-    width: 100%;
+    padding: 15px 30px;
+    width: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border-radius: 8px;
+    position: relative;
+    top: 20px;
+    left: 0; /* Align it to the left */
+    z-index: 1000; /* Ensure it's above other elements */
 }
 
 header .home-icon,
@@ -40,6 +48,14 @@ header .rabbit-icon {
     align-items: center;
     justify-content: center;
     margin: 0;
+    transition: color 0.3s ease, background-color 0.3s ease; /* Smooth hover effect */
+}
+
+header .home-icon:hover,
+header .rabbit-icon:hover {
+    color: #FFD700; /* Gold color on hover */
+    background-color: rgba(255, 255, 255, 0.2); /* Subtle white background on hover */
+    border-radius: 50%;
 }
 
 #headerTitle {
@@ -48,12 +64,15 @@ header .rabbit-icon {
     text-align: center;
 }
 
-/* Ensuring no unwanted background or borders */
-header .home-icon i,
-header .rabbit-icon i {
-    margin: 0;
-    vertical-align: middle;
-    display: block;
+/* Style for the form title */
+#formTitle {
+    text-align: center;  /* Align text to the center */
+    font-size: 1.5em;    /* Optional: increase font size */
+    font-weight: bold;
+    color: #FFD700;      /* Change color to gold */
+    background-color: rgba(0, 0, 0, 0.7); /* Optional: add background for better contrast */
+    padding: 10px;
+    border-radius: 10px;
 }
 
 /* Sidebar styling */
@@ -111,21 +130,29 @@ header .rabbit-icon i {
 }
 
 /* Home page styling */
+.cage-list-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Full height of the container to center vertically */
+    width: 100%;
+}
+
 .cage-list {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 15px;
     width: 100%;
     max-width: 300px;
     padding: 20px;
 }
 
 .cage-list button {
-    background-color: #f4f4f4;
-    color: #000;
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    color: #333;
     border: 2px solid #4CAF50;
-    padding: 15px 20px;
+    padding: 10px;
     cursor: pointer;
     border-radius: 50px;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -141,16 +168,23 @@ header .rabbit-icon i {
 }
 
 /* Cage details form styling */
+#cageDetails {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 20px;
+}
+
 form {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Updated shadow */
     width: 80%;
-    max-width: 300px;
+    max-width: 600px; /* Updated max-width */
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+    margin-top: 10px;
 }
 
 form div {
@@ -161,6 +195,7 @@ form label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #555;
 }
 
 form input[type="text"],
