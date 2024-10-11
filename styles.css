@@ -167,6 +167,17 @@ header .rabbit-icon:hover {
     color: white;
 }
 
+.cage-number-header {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #FFD700;
+    text-align: center;
+    margin-top: 20px; /* Separate it from the main header */
+    background-color: rgba(0, 0, 0, 0.7); /* Optional: background color for better visibility */
+    padding: 10px;
+    border-radius: 10px;
+}
+
 /* Cage details form styling */
 #cageDetails {
     display: flex;
