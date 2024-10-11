@@ -31,7 +31,7 @@ header {
     border-radius: 8px;
     position: absolute;
     top: 80px; /* Adjusted this to move closer to the form */
-    left: 20%; /* Align it to the left */
+    left: 50%; /* Align it to the left */
     transform: translateX(-50%); /* Centers the header */
 }
 
