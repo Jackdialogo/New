@@ -29,8 +29,8 @@ header {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     border-radius: 8px;
-    position: relative;
-    top: 20px;
+    position: absolute;
+    top: 10px;
     left: 50%; /* Align it to the left */
     transform: translateX(-50%); /* Centers the header */
     z-index: 1000; /* Ensure it's above other elements */
@@ -74,19 +74,6 @@ header .rabbit-icon:hover {
     background-color: rgba(0, 0, 0, 0.7); /* Optional: add background for better contrast */
     padding: 10px;
     border-radius: 10px;
-}
-
-.header {
-    position: absolute;
-    top: 10px; /* Adjust top position as needed */
-    left: 50%; /* Move it to the center horizontally */
-    transform: translateX(-50%); /* Correct centering */
-    background-color: green; /* Retain the background color */
-    color: white; /* Text color */
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 18px;
-    font-weight: bold;
 }
 
 /* Sidebar styling */
