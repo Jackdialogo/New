@@ -13,6 +13,10 @@
         <button onclick="goToRabbitProfile()">&#x1F407;</button>
     </header>
 
+    <div id="cageNumberHeader" class="cag-number-header" style="display: none;">
+        <strong>CAGE NO. <span id="cageNumber"></strong>
+    </div>
+
     <div id="cageDetails">
         <form id="rabbitForm" onsubmit="saveData(event)">
             <div>
@@ -117,6 +121,10 @@
         loadData(cageNumber);
         document.getElementById('rabbitForm').dataset.cageNumber = cageNumber;
         document.getElementById('headerTitle').innerHTML = `<strong>CAGE ${cageNumber}</strong>`;
+
+        // Show the cage number header and set the cage number
+        document.getElementById('cageNumberHeader').style.display = 'block';
+        document.getElementById('cageNumber').textContent = cageNumber;
     }
 
     function togglePregnancy(show) {
