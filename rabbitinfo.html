@@ -25,9 +25,9 @@
         header {
             background-color: #4CAF50;
             color: white;
-            padding: 15px;
+            padding: 15px 30px;
             text-align: center;
-            width: 100%;
+            width: 50%;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: relative;
         }
@@ -229,6 +229,12 @@
             // Determine and set gender from the data
             document.getElementById('gender').innerText = (data.gender || 'Unknown').
 
+            // Load the saved profile picture from localStorage
+            const savedPicture = data.profilePicture || '';
+            if (savedPicture) {
+                document.getElementById('profilePicture').querySelector('img').src = savedPicture;
+            }
+
             // Update edit link dynamically to point to the correct cage number
             document.getElementById('edit-link').href = `index.html?cage=${cageNumber}`;
         }
@@ -272,16 +278,23 @@
         function changeProfilePicture() {
             const fileInput = document.getElementById('fileInput');
             const profilePicture = document.getElementById('profilePicture').querySelector('img');
+            const cageNumber = document.getElementById('cage-no').innerText;
 
             if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     profilePicture.src = e.target.result; // Change the image source to the uploaded file
+
+                    // Save the image base64 data to localStorage
+                    const data = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
+                    data.profilePicture = e.target.result; // Save the image as base64
+                    localStorage.setItem(`rabbitData${cageNumber}`, JSON.stringify(data));
+                    
                     closeUploadPrompt(); // Close the modal after upload
                 };
                 reader.readAsDataURL(fileInput.files[0]); // Convert file to base64
             } else {
-                alert("Please select a file.");
+                alert("Select a file.");
             }
         }
     </script>
