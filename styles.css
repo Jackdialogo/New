@@ -30,7 +30,7 @@ header {
     margin-bottom: 20px;
     border-radius: 8px;
     position: absolute;
-    top: 80px; /* Adjusted this to move closer to the form */
+    top: 40px; /* Adjusted this to move closer to the form */
     left: 50%; /* Align it to the left */
     transform: translateX(-50%); /* Centers the header */
 }
