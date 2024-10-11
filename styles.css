@@ -18,7 +18,7 @@ body {
 
 /* Header styling */
 header {
-    background-color: rgba(76, 175, 80, 0.95); /* Increased opacity for stronger contrast */
+    background-color: rgba(76, 175, 80, 1); /* Increased opacity for stronger contrast */
     color: white;
     padding: 15px 30px;
     width: auto;
@@ -30,7 +30,7 @@ header {
     margin-bottom: 20px;
     border-radius: 8px;
     position: absolute;
-    top: 20px;
+    top: 120px; /* Adjusted this to move closer to the form */
     left: 50%; /* Align it to the left */
     transform: translateX(-50%); /* Centers the header */
     z-index: 1000; /* Ensure it's above other elements */
@@ -177,7 +177,7 @@ header .rabbit-icon:hover {
 }
 
 form {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.99);
     padding: 30px;
     border: 1px solid rgba(255, 255, 255, 0.5)
     border-radius: 10px;
