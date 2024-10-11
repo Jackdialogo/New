@@ -119,7 +119,7 @@
         document.getElementById('cageDetails').style.display = 'block';
         loadData(cageNumber);
         document.getElementById('rabbitForm').dataset.cageNumber = cageNumber;
-        document.getElementById('headerTitle').innerHTML = `<strong>CAGE ${cageNumber}</strong>`;
+        document.getElementById('headerTitle').innerHTML = `<strong>RABBIT CAGE</strong>`;
 
         // Show the cage number header and set the cage number
         document.getElementById('cageNumberHeader').style.display = 'block';
@@ -193,12 +193,16 @@
     }
 
     // New function to delete cage data
-    function deleteCage() {
+       function clearForm() {
         const cageNumber = document.getElementById('rabbitForm').dataset.cageNumber;
-        if (confirm(`Are you sure you want to delete data for Cage ${cageNumber}?`)) {
-            localStorage.removeItem(`rabbitData${cageNumber}`);
-            alert(`Data for Cage ${cageNumber} has been deleted.`);
-            goHome();
+        if (confirm(`Are you sure you want to clear the data for Cage ${cageNumber}?`)) {
+            const formElements = document.getElementById('rabbitForm').elements;
+            for (let i = 0; i < formElements.length; i++) {
+                if (formElements[i].type !== 'button' && formElements[i].type !== 'submit') {
+                    formElements[i].value = '';
+                }
+            }
+            alert(`Form data for Cage ${cageNumber} has been cleared.`);
         }
     }
 
