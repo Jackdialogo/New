@@ -31,9 +31,8 @@ header {
     border-radius: 8px;
     position: absolute;
     top: 80px; /* Adjusted this to move closer to the form */
-    left: 50%; /* Align it to the left */
+    left: 40%; /* Align it to the left */
     transform: translateX(-50%); /* Centers the header */
-    z-index: 1000; /* Ensure it's above other elements */
 }
 
 header .home-icon,
