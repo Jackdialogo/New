@@ -175,7 +175,7 @@
 
     <div class="profile-card">
         <div class="profile-picture" id="profilePicture" onclick="showUploadPrompt()">
-            <img alt="Rabbit Profile Picture">
+            <img id="profileImg" alt="Rabbit Profile Picture"> <!-- Add id here -->
         </div>
         <h2 id="breed">Breed</h2>
         <div class="profile-details">
@@ -230,76 +230,54 @@
     const profileImg = document.getElementById('profileImg');
     if (data.profilePicture) {
         profileImg.src = data.profilePicture;
-    }       
-    // Determine and set gender from the index.html 'Gender' field
-    document.getElementById('gender').innerText = (data.gender || 'Unknown').toLowerCase().replace(/^\w/, c => c.toUpperCase());
-
-    // Update edit link dynamically to point to the correct cage number
-    document.getElementById('edit-link').href = `index.html?cage=${cageNumber}`;
-}
-
-// Function to calculate age from birth date
-function calculateAge(birthDate) {
-    if (!birthDate) return null;
-    const birth = new Date(birthDate);
-    const today = new Date();
-    let age = today.getFullYear() - birth.getFullYear();
-    const m = today.getMonth() - birth.getMonth();
-
-    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
-        age--;
+    } else {
+        profileImg.src = 'https://tinyurl.com/2ybmu2yr'; // default image
     }
+};
 
-    // If age is less than 1 year, calculate months
-    if (age < 1) {
-        const months = (today.getFullYear() - birth.getFullYear()) * 12 + today.getMonth() - birth.getMonth();
-        return months + (months > 1 ? ' months' : ' month');
-    }
-
-    return age + (age > 1 ? ' years' : ' year');
-}
-
-            // Function to show upload prompt
         function showUploadPrompt() {
             document.getElementById('uploadModal').style.display = 'block';
         }
 
-        // Function to close upload prompt
         function closeUploadPrompt() {
             document.getElementById('uploadModal').style.display = 'none';
         }
 
-        // Function to change the profile picture
         function changeProfilePicture() {
             const fileInput = document.getElementById('fileInput');
-            if (fileInput.files.length === 0) return; // Check if a file was selected
+            const profileImg = document.getElementById('profileImg');
 
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                // Update the profile image src with the new image
-                document.getElementById('profileImg').src = event.target.result;
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
 
-                // Optionally, save the new image URL to localStorage
-                const params = new URLSearchParams(window.location.search);
-                const cageNumber = params.get('cage') || '1';
-                const rabbitData = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
-                rabbitData.profilePicture = event.target.result;
-                localStorage.setItem(`rabbitData${cageNumber}`, JSON.stringify(rabbitData));
-
-                // Close the modal after upload
-                closeUploadPrompt();
-            };
-            reader.readAsDataURL(file);
+                reader.onload = function(e) {
+                    profileImg.src = e.target.result; // Update image source
+                    localStorage.setItem(`rabbitData${cageNumber}`, JSON.stringify({ ...data, profilePicture: e.target.result })); // Save to localStorage
+                };
+                reader.readAsDataURL(file);
+                closeUploadPrompt(); // Close the modal
+            } else {
+                alert("Please select a file.");
+            }
         }
 
-        // Close the modal if the user clicks outside of the modal
+        function calculateAge(birthDate) {
+            if (!birthDate) return null;
+            const today = new Date();
+            const birth = new Date(birthDate);
+            const ageInMilliseconds = today - birth;
+            const ageInDays = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24));
+            return ageInDays; // Return age in days
+        }
+
+        // Click outside modal to close it
         window.onclick = function(event) {
             const modal = document.getElementById('uploadModal');
             if (event.target == modal) {
-                modal.style.display = 'none';
+                closeUploadPrompt();
             }
         }
-</script>
+    </script>
 </body>
 </html>
