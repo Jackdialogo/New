@@ -262,6 +262,24 @@
             }
         }
 
+        function saveProfileData() {
+            const data = {
+                breed: document.getElementById('breed').innerText,
+                serialNumber: document.getElementById('serial-no').innerText,
+                cageNumber: document.getElementById('cage-no').innerText,
+                birthDate: document.getElementById('birthDate').value,
+                weight: document.getElementById('weight').innerText,
+                family: document.getElementById('family').innerText,
+                foodIntake: document.getElementById('food-intake').innerText,
+                pregnancyStart: document.getElementById('pregnancy-start').innerText,
+                dueDate: document.getElementById('pregnancy-due').innerText,
+                mating: document.getElementById('mating').innerText,
+                profilePicture: document.getElementById('profileImg').src,
+            };
+
+            localStorage.setItem(`rabbitData${cageNumber}`, JSON.stringify(data));
+        }
+
         function calculateAge(birthDate) {
             if (!birthDate) return null;
             const today = new Date();
