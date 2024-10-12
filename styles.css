@@ -18,21 +18,21 @@ body {
 
 /* Header styling */
 header {
-    background-color: rgba(76, 175, 80, 1); /* Increased opacity for stronger contrast */
+    background-color: rgba(76, 175, 80, 0.95); /* Increased opacity for stronger contrast */
     color: white;
     padding: 15px 30px;
     width: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     border-radius: 8px;
-    position: absolute;
-    top: 30px; /* Adjusted this to move closer to the form */
-    left: 50%; /* Align it to the left */
-    transform: translateX(-50%); /* Centers the header */
+    position: relative;
+    top: 20px;
+    left: 0; /* Align it to the left */
+    z-index: 1000; /* Ensure it's above other elements */
 }
 
 header .home-icon,
@@ -167,18 +167,6 @@ header .rabbit-icon:hover {
     color: white;
 }
 
-.cage-number-header {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #FFD700;
-    text-align: center;
-    margin-top: 20px; /* Separate it from the main header */
-    background-color: rgba(0, 0, 0, 0.7); /* Optional: background color for better visibility */
-    padding: 10px;
-    border-radius: 10px;
-    left: 60%; /* Align it to the left */
-}
-
 /* Cage details form styling */
 #cageDetails {
     display: flex;
@@ -188,9 +176,8 @@ header .rabbit-icon:hover {
 }
 
 form {
-    background-color: rgba(255, 255, 255, 0.99);
-    padding: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.5)
+    background-color: white;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Updated shadow */
     width: 80%;
@@ -198,7 +185,6 @@ form {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
-    margin-left: 20px;
 }
 
 form div {
@@ -228,7 +214,6 @@ form input[type="radio"] {
 form .buttons {
     display: flex;
     justify-content: space-between;
-    gap: 15px;
 }
 
 form .buttons button {
