@@ -1,5 +1,3 @@
-I can't click the rabbit profile to upload profile pic
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +12,6 @@ I can't click the rabbit profile to upload profile pic
         <span id="headerTitle">Rabbit Cage</span>
         <button onclick="goToRabbitProfile()">&#x1F407;</button>
     </header>
-
-    <div id="cageNumberHeader" class="cag-number-header" style="display: none;">
-    </div>
 
     <div id="cageDetails">
         <form id="rabbitForm" onsubmit="saveData(event)">
@@ -88,9 +83,9 @@ I can't click the rabbit profile to upload profile pic
             </div>
 
             <div class="buttons">
-                <button type="submit">Save</button>
-                <button type="button" onclick="clearForm()">Clear Form</button>
-                <button type="button" onclick="goHome()">Cancel</button>
+                <button type="submit">SUBMIT</button>
+                <button type="button" onclick="goHome()">CANCEL</button>
+                <button type="button" onclick="deleteCage()">DELETE CAGE</button> <!-- Delete Cage Button -->
             </div>
         </form>
     </div>
@@ -121,11 +116,7 @@ I can't click the rabbit profile to upload profile pic
         document.getElementById('cageDetails').style.display = 'block';
         loadData(cageNumber);
         document.getElementById('rabbitForm').dataset.cageNumber = cageNumber;
-        document.getElementById('headerTitle').innerHTML = <strong>RABBIT CAGE</strong>;
-
-        // Show the cage number header and set the cage number
-        document.getElementById('cageNumberHeader').style.display = 'block';
-        document.getElementById('cageNumber').textContent = cageNumber;
+        document.getElementById('headerTitle').innerHTML = `<strong>CAGE ${cageNumber}</strong>`;
     }
 
     function togglePregnancy(show) {
@@ -146,13 +137,13 @@ I can't click the rabbit profile to upload profile pic
         data.forEach((value, key) => {
             obj[key] = value;
         });
-        localStorage.setItem(rabbitData${cageNumber}, JSON.stringify(obj));
+        localStorage.setItem(`rabbitData${cageNumber}`, JSON.stringify(obj));
         alert('Data saved successfully!');
         goToRabbitProfile();
     }
 
     function loadData(cageNumber) {
-        let data = JSON.parse(localStorage.getItem(rabbitData${cageNumber})) || {};
+        let data = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
         document.getElementById('serialNumber').value = data.serialNumber || '';
         document.getElementById('breed').value = data.breed || '';
         document.getElementById('family').value = data.family || '';
@@ -178,8 +169,8 @@ I can't click the rabbit profile to upload profile pic
         document.getElementById('matedRabbit').value = data.matedRabbit || '';
         document.getElementById('pregnancyStart').value = data.pregnancyStart || '';
         document.getElementById('dueDate').value = data.dueDate || '';
-        document.querySelector(input[name="foodIntake"][value="${data.foodIntake || 'normal'}"]).checked = true;
-        document.querySelector(input[name="mating"][value="${data.mating || 'no'}"]).checked = true;
+        document.querySelector(`input[name="foodIntake"][value="${data.foodIntake || 'normal'}"]`).checked = true;
+        document.querySelector(`input[name="mating"][value="${data.mating || 'no'}"]`).checked = true;
         document.getElementById('note').value = data.note || '';
     }
 
@@ -191,20 +182,16 @@ I can't click the rabbit profile to upload profile pic
         data.forEach((value, key) => {
             params.append(key, value);
         });
-        window.location.href = rabbitinfo.html?cage=${cageNumber}&${params.toString()};
+        window.location.href = `rabbitinfo.html?cage=${cageNumber}&${params.toString()}`;
     }
 
     // New function to delete cage data
-       function clearForm() {
+    function deleteCage() {
         const cageNumber = document.getElementById('rabbitForm').dataset.cageNumber;
-        if (confirm(Are you sure you want to clear the data for Cage ${cageNumber}?)) {
-            const formElements = document.getElementById('rabbitForm').elements;
-            for (let i = 0; i < formElements.length; i++) {
-                if (formElements[i].type !== 'button' && formElements[i].type !== 'submit') {
-                    formElements[i].value = '';
-                }
-            }
-            alert(Form data for Cage ${cageNumber} has been cleared.);
+        if (confirm(`Are you sure you want to delete data for Cage ${cageNumber}?`)) {
+            localStorage.removeItem(`rabbitData${cageNumber}`);
+            alert(`Data for Cage ${cageNumber} has been deleted.`);
+            goHome();
         }
     }
 
@@ -213,7 +200,7 @@ I can't click the rabbit profile to upload profile pic
         totalCages++;
         const homePage = document.getElementById('homePage');
         const newCageButton = document.createElement('button');
-        newCageButton.textContent = CAGE ${totalCages};
+        newCageButton.textContent = `CAGE ${totalCages}`;
         newCageButton.onclick = () => showCageDetails(totalCages);
         homePage.insertBefore(newCageButton, homePage.lastElementChild);
     }
