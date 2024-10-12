@@ -1,3 +1,5 @@
+I can't click the rabbit profile to upload profile pic
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,13 +71,6 @@
                 </div>
             </div>
 
-            <!-- Profile Picture Upload Section -->
-            <div>
-                <label for="profilePic">UPLOAD PROFILE PICTURE:</label>
-                <input type="file" id="profilePic" name="profilePic" accept="image/*">
-            </div>
-            <div id="profilePicDisplay"></div> <!-- Image display area -->
-
             <!-- Other Fields -->
             <div>
                 <label for="foodIntake">FOOD INTAKE:</label>
@@ -126,7 +121,7 @@
         document.getElementById('cageDetails').style.display = 'block';
         loadData(cageNumber);
         document.getElementById('rabbitForm').dataset.cageNumber = cageNumber;
-        document.getElementById('headerTitle').innerHTML = '<strong>RABBIT CAGE</strong>';
+        document.getElementById('headerTitle').innerHTML = <strong>RABBIT CAGE</strong>;
 
         // Show the cage number header and set the cage number
         document.getElementById('cageNumberHeader').style.display = 'block';
@@ -151,44 +146,19 @@
         data.forEach((value, key) => {
             obj[key] = value;
         });
-
-        // Handle profile picture upload
-        const profilePic = document.getElementById('profilePic').files[0];
-        if (profilePic) {
-            const reader = new FileReader();
-            reader.onloadend = function () {
-                obj.profilePic = reader.result; // Save the base64 string of the image
-                localStorage.setItem(`rabbitData${cageNumber}`, JSON.stringify(obj));
-                alert('Data and profile picture saved successfully!');
-                goToRabbitProfile();
-            };
-            reader.readAsDataURL(profilePic); // Convert image to base64
-        } else {
-            localStorage.setItem(`rabbitData${cageNumber}`, JSON.stringify(obj));
-            alert('Data saved successfully!');
-            goToRabbitProfile();
-        }
+        localStorage.setItem(rabbitData${cageNumber}, JSON.stringify(obj));
+        alert('Data saved successfully!');
+        goToRabbitProfile();
     }
 
     function loadData(cageNumber) {
-        let data = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
+        let data = JSON.parse(localStorage.getItem(rabbitData${cageNumber})) || {};
         document.getElementById('serialNumber').value = data.serialNumber || '';
         document.getElementById('breed').value = data.breed || '';
         document.getElementById('family').value = data.family || '';
         document.getElementById('birthDate').value = data.birthDate || '';
         document.getElementById('weight').value = data.weight || '';
-
-        // Handle loading of profile picture
-        if (data.profilePic) {
-            const img = document.createElement('img');
-            img.src = data.profilePic;
-            img.alt = 'Profile Picture';
-            img.classList.add('profile-img'); // Add a class for styling
-            const profilePicDisplay = document.getElementById('profilePicDisplay');
-            profilePicDisplay.innerHTML = ''; // Clear previous image
-            profilePicDisplay.appendChild(img); // Display the image
-        }
-
+        
         if (data.gender === "female") {
             document.querySelector('input[name="gender"][value="female"]').checked = true;
             togglePregnancy(true);
@@ -196,10 +166,24 @@
             document.querySelector('input[name="gender"][value="male"]').checked = true;
             togglePregnancy(false);
         }
-        // ...rest of your form population code
+
+        if (data.pregnant === "yes") {
+            document.querySelector('input[name="pregnant"][value="yes"]').checked = true;
+            togglePregnancyDetails(true);
+        } else {
+            document.querySelector('input[name="pregnant"][value="no"]').checked = true;
+            togglePregnancyDetails(false);
+        }
+
+        document.getElementById('matedRabbit').value = data.matedRabbit || '';
+        document.getElementById('pregnancyStart').value = data.pregnancyStart || '';
+        document.getElementById('dueDate').value = data.dueDate || '';
+        document.querySelector(input[name="foodIntake"][value="${data.foodIntake || 'normal'}"]).checked = true;
+        document.querySelector(input[name="mating"][value="${data.mating || 'no'}"]).checked = true;
+        document.getElementById('note').value = data.note || '';
     }
 
-        function goToRabbitProfile() {
+    function goToRabbitProfile() {
         const cageNumber = document.getElementById('rabbitForm').dataset.cageNumber || 1;
         const form = document.getElementById('rabbitForm');
         const data = new FormData(form);
@@ -223,13 +207,15 @@
             alert(Form data for Cage ${cageNumber} has been cleared.);
         }
     }
-    
+
+    // New function to add a new cage
     function addNewCage() {
-        totalCages += 1;
-        const newButton = document.createElement('button');
-        newButton.textContent = `CAGE ${totalCages}`;
-        newButton.onclick = function() { showCageDetails(totalCages); };
-        document.querySelector('.cage-list').insertBefore(newButton, document.querySelector('.cage-list button:last-child'));
+        totalCages++;
+        const homePage = document.getElementById('homePage');
+        const newCageButton = document.createElement('button');
+        newCageButton.textContent = CAGE ${totalCages};
+        newCageButton.onclick = () => showCageDetails(totalCages);
+        homePage.insertBefore(newCageButton, homePage.lastElementChild);
     }
 
     window.onload = function () {
@@ -240,7 +226,6 @@
             goHome();
         }
     }
-
 </script>
 </body>
 </html>
