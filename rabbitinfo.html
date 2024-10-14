@@ -218,7 +218,7 @@
     document.getElementById('breed').innerText = data.breed || 'Unknown';
     document.getElementById('serial-no').innerText = data.serialNumber || 'Unknown';
     document.getElementById('cage-no').innerText = cageNumber;
-    document.getElementById('age').innerText = calculateAge(data.birthDate) || 'Unknown';
+    document.getElementById('age').innerText = calculateAge(data.birthDate) || '';
     document.getElementById('gender').innerText = data.gender || 'Unknown';
     document.getElementById('weight').innerText = data.weight || 'Unknown';
     document.getElementById('family').innerText = data.family || 'Unknown';
