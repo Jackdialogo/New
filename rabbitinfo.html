@@ -301,6 +301,65 @@
                 closeUploadPrompt();
             }
         }
+
+        function checkMatingEligibility(birthDate) {
+            if (!birthDate) {
+                return "No Date of Birth Provided";
+            }
+
+            const birth = new Date(birthDate);
+            const today = new Date();
+            const diffInMonths = (today.getFullYear() - birth.getFullYear()) * 12 + (today.getMonth() - birth.getMonth());
+
+            if (diffInMonths >= 6) {
+                const nextEligibleDate = new Date(birth);
+                nextEligibleDate.setMonth(birth.getMonth() + 6);
+
+                if (diffInMonths % 3 === 0) {
+                    return "Eligible for Mating";
+                } else {
+                    return `Next eligible in ${3 - (diffInMonths % 3)} month(s)`;
+                }
+            } else {
+                return `Not Eligible (Eligible in ${6 - diffInMonths} month(s))`;
+            }
+        }
+
+        function loadData(cageNumber) {
+            let data = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
+            document.getElementById('serialNumber').value = data.serialNumber || '';
+            document.getElementById('breed').value = data.breed || '';
+            document.getElementById('family').value = data.family || '';
+            document.getElementById('birthDate').value = data.birthDate || '';
+            document.getElementById('weight').value = data.weight || '';
+
+            if (data.gender === "female") {
+                document.querySelector('input[name="gender"][value="female"]').checked = true;
+                togglePregnancy(true);
+            } else {
+                document.querySelector('input[name="gender"][value="male"]').checked = true;
+                togglePregnancy(false);
+            }
+
+            if (data.pregnant === "yes") {
+                document.querySelector('input[name="pregnant"][value="yes"]').checked = true;
+                togglePregnancyDetails(true);
+            } else {
+                document.querySelector('input[name="pregnant"][value="no"]').checked = true;
+                togglePregnancyDetails(false);
+            }
+
+            document.getElementById('matedRabbit').value = data.matedRabbit || '';
+            document.getElementById('pregnancyStart').value = data.pregnancyStart || '';
+            document.getElementById('dueDate').value = data.dueDate || '';
+            document.querySelector(`input[name="foodIntake"][value="${data.foodIntake || 'normal'}"]`).checked = true;
+
+            // Check and display mating eligibility
+            const eligibility = checkMatingEligibility(data.birthDate);
+            document.getElementById('matingEligibility').innerText = eligibility;
+
+            document.getElementById('note').value = data.note || '';
+        }
     </script>
 </body>
 </html>
