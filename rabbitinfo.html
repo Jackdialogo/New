@@ -216,15 +216,15 @@
 
     // Update profile details
     document.getElementById('breed').innerText = data.breed || 'Unknown';
-    document.getElementById('serial-no').innerText = data.serialNumber || 'Unknown';
+    document.getElementById('serial-no').innerText = data.serialNumber || '';
     document.getElementById('cage-no').innerText = cageNumber;
     document.getElementById('age').innerText = calculateAge(data.birthDate) || '';
     document.getElementById('gender').innerText = data.gender || 'Unknown';
     document.getElementById('weight').innerText = data.weight || 'Unknown';
     document.getElementById('family').innerText = data.family || 'Unknown';
     document.getElementById('food-intake').innerText = data.foodIntake === "normal" ? "Normal" : "Irregular";
-    document.getElementById('pregnancy-start').innerText = data.pregnancyStart || 'Unknown';
-    document.getElementById('pregnancy-due').innerText = data.dueDate || 'Unknown';
+    document.getElementById('pregnancy-start').innerText = data.pregnancyStart || '';
+    document.getElementById('pregnancy-due').innerText = data.dueDate || '';
     document.getElementById('mating').innerText = data.mating === "yes" ? "Yes" : "No";
 
     // Set profile image if available
