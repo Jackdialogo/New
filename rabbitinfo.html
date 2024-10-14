@@ -219,6 +219,7 @@
     document.getElementById('serial-no').innerText = data.serialNumber || 'Unknown';
     document.getElementById('cage-no').innerText = cageNumber;
     document.getElementById('age').innerText = calculateAge(data.birthDate) || 'Unknown';
+    document.getElementById('gender').innerText = data.gender || 'Unknown';
     document.getElementById('weight').innerText = data.weight || 'Unknown';
     document.getElementById('family').innerText = data.family || 'Unknown';
     document.getElementById('food-intake').innerText = data.foodIntake === "normal" ? "Normal" : "Irregular";
