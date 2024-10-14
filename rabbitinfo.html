@@ -211,30 +211,30 @@
             const params = new URLSearchParams(window.location.search);
             const cageNumber = params.get('cage') || '1';
 
-           // Load rabbit data from localStorage
-    const data = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
+            // Load rabbit data from localStorage
+            const data = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
 
-    // Update profile details
-    document.getElementById('breed').innerText = data.breed || 'Unknown';
-    document.getElementById('serial-no').innerText = data.serialNumber || '';
-    document.getElementById('cage-no').innerText = cageNumber;
-    document.getElementById('age').innerText = calculateAge(data.birthDate) || '';
-    document.getElementById('gender').innerText = data.gender || 'Unknown';
-    document.getElementById('weight').innerText = data.weight || 'Unknown';
-    document.getElementById('family').innerText = data.family || 'Unknown';
-    document.getElementById('food-intake').innerText = data.foodIntake === "normal" ? "Normal" : "Irregular";
-    document.getElementById('pregnancy-start').innerText = data.pregnancyStart || '';
-    document.getElementById('pregnancy-due').innerText = data.dueDate || '';
-    document.getElementById('mating').innerText = data.mating === "yes" ? "Yes" : "No";
+            // Update profile details
+            document.getElementById('breed').innerText = data.breed || 'Unknown';
+            document.getElementById('serial-no').innerText = data.serialNumber || '';
+            document.getElementById('cage-no').innerText = cageNumber;
+            document.getElementById('age').innerText = calculateAge(data.birthDate) || '';
+            document.getElementById('gender').innerText = data.gender || 'Unknown';
+            document.getElementById('weight').innerText = data.weight || 'Unknown';
+            document.getElementById('family').innerText = data.family || 'Unknown';
+            document.getElementById('food-intake').innerText = data.foodIntake === "normal" ? "Normal" : "Irregular";
+            document.getElementById('pregnancy-start').innerText = data.pregnancyStart || '';
+            document.getElementById('pregnancy-due').innerText = data.dueDate || '';
+            document.getElementById('mating').innerText = data.mating === "yes" ? "Yes" : "No";
 
-    // Set profile image if available
-    const profileImg = document.getElementById('profileImg');
-    if (data.profilePicture) {
-        profileImg.src = data.profilePicture;
-    } else {
-        profileImg.src = 'https://tinyurl.com/2ybmu2yr'; // default image
-    }
-};
+            // Set profile image if available
+            const profileImg = document.getElementById('profileImg');
+            if (data.profilePicture) {
+                profileImg.src = data.profilePicture;
+            } else {
+                profileImg.src = 'https://tinyurl.com/2ybmu2yr'; // default image
+            }
+        };
 
         function showUploadPrompt() {
             document.getElementById('uploadModal').style.display = 'block';
@@ -250,56 +250,29 @@
             const params = new URLSearchParams(window.location.search);
             const cageNumber = params.get('cage') || '1';
 
-            if (fileInput.files.length > 0) {
-                const file = fileInput.files[0];
+            if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
-
                 reader.onload = function(e) {
-                    profileImg.src = e.target.result; // Update image source
-
-                    const data = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
-                    localStorage.setItem(`rabbitData${cageNumber}`, JSON.stringify({ ...data, profilePicture: e.target.result })); // Save to localStorage
+                    profileImg.src = e.target.result;
+                    updateProfilePicture(e.target.result, cageNumber);
                 };
-                reader.readAsDataURL(file);
-                closeUploadPrompt(); // Close the modal
-            } else {
-                alert("Please select a file.");
+                reader.readAsDataURL(fileInput.files[0]);
             }
+            closeUploadPrompt();
         }
 
-        function saveProfileData() {
-            const data = {
-                breed: document.getElementById('breed').innerText,
-                serialNumber: document.getElementById('serial-no').innerText,
-                cageNumber: document.getElementById('cage-no').innerText,
-                birthDate: document.getElementById('birthDate').value,
-                weight: document.getElementById('weight').innerText,
-                family: document.getElementById('family').innerText,
-                foodIntake: document.getElementById('food-intake').innerText,
-                pregnancyStart: document.getElementById('pregnancy-start').innerText,
-                dueDate: document.getElementById('pregnancy-due').innerText,
-                mating: document.getElementById('mating').innerText,
-                profilePicture: document.getElementById('profileImg').src,
-            };
-
+        function updateProfilePicture(picture, cageNumber) {
+            const data = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
+            data.profilePicture = picture;
             localStorage.setItem(`rabbitData${cageNumber}`, JSON.stringify(data));
         }
 
         function calculateAge(birthDate) {
-            if (!birthDate) return null;
-            const today = new Date();
+            if (!birthDate) return '';
             const birth = new Date(birthDate);
-            const ageInMilliseconds = today - birth;
-            const ageInDays = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24));
-            return ageInDays; // Return age in days
-        }
-
-        // Click outside modal to close it
-        window.onclick = function(event) {
-            const modal = document.getElementById('uploadModal');
-            if (event.target == modal) {
-                closeUploadPrompt();
-            }
+            const now = new Date();
+            const ageInDays = Math.floor((now - birth) / (1000 * 60 * 60 * 24));
+            return `${ageInDays} days`;
         }
     </script>
 </body>
