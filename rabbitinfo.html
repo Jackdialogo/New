@@ -247,6 +247,8 @@
         function changeProfilePicture() {
             const fileInput = document.getElementById('fileInput');
             const profileImg = document.getElementById('profileImg');
+            const params = new URLSearchParams(window.location.search);
+            const cageNumber = params.get('cage') || '1';
 
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
@@ -254,6 +256,8 @@
 
                 reader.onload = function(e) {
                     profileImg.src = e.target.result; // Update image source
+
+                    const data = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
                     localStorage.setItem(`rabbitData${cageNumber}`, JSON.stringify({ ...data, profilePicture: e.target.result })); // Save to localStorage
                 };
                 reader.readAsDataURL(file);
