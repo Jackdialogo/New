@@ -36,6 +36,16 @@
                 <input type="text" id="weight" name="weight">
             </div>
 
+            <div>
+                <label for="rabbitType">RABBIT TYPE:</label>
+                <select id="rabbitType" name="rabbitType" required>
+                    <option value="">--Select Type--</option>
+                    <option value="fattener">Fattener</option>
+                    <option value="doe">Doe</option>
+                    <option value="breeder">Breeder</option>
+                </select>
+            </div>
+
             <!-- Gender Section -->
             <div>
                 <label for="gender">GENDER:</label>
@@ -84,7 +94,7 @@
             <div class="buttons">
                 <button type="submit">SUBMIT</button>
                 <button type="button" onclick="goHome()">CANCEL</button>
-                <button type="button" onclick="deleteCage()">DELETE CAGE</button> <!-- Delete Cage Button -->
+                <button type="button" onclick="deleteCage()">CLEAR CAGE</button> <!-- Delete Cage Button -->
             </div>
         </form>
     </div>
