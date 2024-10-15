@@ -287,11 +287,21 @@
 
         function calculateAge(birthDate) {
             if (!birthDate) return null;
+            
             const today = new Date();
             const birth = new Date(birthDate);
+            
             const ageInMilliseconds = today - birth;
-            const ageInDays = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24));
-            return ageInDays; // Return age in days
+            const ageInDays = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24)); // Age in days
+            
+            // If age is less than 30 days, return in days
+            if (ageInDays < 30) {
+                return `${ageInDays} day(s)`;
+            }
+            
+            // Otherwise, calculate age in months
+            const ageInMonths = Math.floor(ageInDays / 30); // Approximate months
+            return `${ageInMonths} month(s)`;
         }
 
         // Click outside modal to close it
