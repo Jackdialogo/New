@@ -205,7 +205,7 @@
             <p><span class="label">Food Intake:</span> <span id="food-intake">Unknown</span></p>
             <p><span class="label">Pregnancy Start:</span> <span id="pregnancy-start">Unknown</span></p>
             <p><span class="label">Pregnancy Due:</span> <span id="pregnancy-due">Unknown</span></p>
-            <p><span class="label">Eligible for Mating:</span> <span id="mating">Unknown</span></p>
+            <p><span class="label">Eligibility for Mating:</span> <span id="mating">Unknown</span></p>
         </div>
         <div>
             <a href="https://jackdialogo.github.io/New/index.html?cage=1" class="edit-details" id="edit-link">Edit Details</a>
@@ -307,9 +307,7 @@
             const eligibilityForMating = document.getElementById('mating').innerText; 
     
             const data = JSON.parse(localStorage.getItem(`rabbitData${cageNumber}`)) || {};
-    
             data.matingEligibility = eligibilityForMating;
-
             localStorage.setItem(`rabbitData${cageNumber}`, JSON.stringify(data));
         }
 
