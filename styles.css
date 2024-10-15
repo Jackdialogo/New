@@ -18,9 +18,9 @@ body {
 
 /* Header styling */
 header {
-    background-color: rgba(76, 175, 80, 0.95); /* Increased opacity for stronger contrast */
+    background-color: rgba(76, 175, 80, 0.9); /* Increased opacity for stronger contrast */
     color: white;
-    padding: 15px 30px;
+    padding: 20px 45px;
     width: auto;
     display: flex;
     align-items: center;
