@@ -23,15 +23,26 @@
 
         /* Header styling */
         header {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #6dd5ed, #4CAF50); /* Subtle gradient */
             color: white;
             padding: 20px 50px;
             text-align: center;
             width: 50%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Deeper shadow for depth */
+            border-radius: 15px; /* Rounded corners */
             position: relative;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+            font-size: 24px; /* Slightly larger font */
+            letter-spacing: 1px; /* Improved readability */
+            text-transform: uppercase; /* Make header title uppercase */
         }
-
+        
+        /* Add a slight text shadow to enhance readability */
+        header #headerTitle {
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Icon or button inside header */
         header button {
             background: none;
             border: none;
@@ -41,7 +52,13 @@
             position: absolute;
             left: 15px;
             top: 15px;
+            transition: transform 0.3s ease-in-out; /* Smooth hover effect */
         }
+        
+        header button:hover {
+            transform: scale(1.1); /* Slight scaling on hover */
+        }
+
 
         /* Profile card styling */
         .profile-card {
