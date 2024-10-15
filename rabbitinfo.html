@@ -200,6 +200,7 @@
             <p><span class="label">Cage No.:</span> <span id="cage-no">1</span></p>
             <p><span class="label">Age:</span> <span id="age">Unknown</span></p>
             <p><span class="label">Gender:</span> <span id="gender">Unknown</span></p>
+            <p><span class="label">Rabbit Type:</span> <span id="rabbit-type">Unknown</span></p>
             <p><span class="label">Weight:</span> <span id="weight">Unknown</span></p>
             <p><span class="label">Family:</span> <span id="family">Unknown</span></p>
             <p><span class="label">Food Intake:</span> <span id="food-intake">Unknown</span></p>
@@ -243,6 +244,7 @@
     document.getElementById('pregnancy-start').innerText = data.pregnancyStart || '';
     document.getElementById('pregnancy-due').innerText = data.dueDate || '';
     document.getElementById('mating').innerText = data.matingEligibility || '';
+    document.getElementById('rabbit-type').innerText = data.rabbitType || 'Unknown';
 
     // Set profile image if available
     const profileImg = document.getElementById('profileImg');
@@ -297,6 +299,7 @@
                 dueDate: document.getElementById('pregnancy-due').innerText,
                 mating: document.getElementById('mating').innerText,
                 profilePicture: document.getElementById('profileImg').src,
+                rabbitType: document.getElementById('rabbit-type').innerText,
             };
 
             localStorage.setItem(`rabbitData${cageNumber}`, JSON.stringify(data));
